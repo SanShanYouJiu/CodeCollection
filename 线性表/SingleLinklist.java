@@ -167,7 +167,7 @@ class LinkList{
      始终让头结点在第一个位置 头插法 头结点为空
     */
     public void CreateListHead( int n) {
-        ++n;//因为不能插入头结点（p[0]） 所以通过自增来减掉偏差
+        ++n;//因为p[0]要被当做头结点  所以通过自增来减掉偏差
         Node [] p=new Node[n];//要插入的节点
         int i;
         p[0]=head;//保持头结点为空
@@ -244,7 +244,3 @@ class LinkList{
 
 
 }
-
-
-
-

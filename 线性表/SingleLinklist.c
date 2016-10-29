@@ -3,46 +3,46 @@
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-#define MAXSIZE 20 /*´æ´¢¿Õ¼ä³õÊ¼»¯·ÖÅäÁ¿*/
-typedef int ElemType;/*ElemType¸ù¾İÊµ¼ÊÇé¿ö¶ø¶¨ ÕâÀï¼ÙÉèÎªint*/
-/*ÏßĞÔ±íµÄµ¥Á´±í´æ´¢½á¹¹*/
+#define MAXSIZE 20 /*å­˜å‚¨ç©ºé—´åˆå§‹åŒ–åˆ†é…é‡*/
+typedef int ElemType;/*ElemTypeæ ¹æ®å®é™…æƒ…å†µè€Œå®š è¿™é‡Œå‡è®¾ä¸ºint*/
+/*çº¿æ€§è¡¨çš„å•é“¾è¡¨å­˜å‚¨ç»“æ„*/
 typedef int Status;
 typedef struct Node {
 	ElemType data;
 	struct Node *next;
 } Node;
 
-typedef struct Node *LinkList;/*¶¨ÒåLinkList*/
+typedef struct Node *LinkList;/*å®šä¹‰LinkList*/
 
 /*
-³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ 1<=i<=ListLength(L)
-²Ù×÷Ìõ¼ş£ºÓÃe·µ»ØLÖĞµÚi¸öÊı¾İÔªËØµÄÖµ
+åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ 1<=i<=ListLength(L)
+æ“ä½œæ¡ä»¶ï¼šç”¨eè¿”å›Lä¸­ç¬¬iä¸ªæ•°æ®å…ƒç´ çš„å€¼
 */
 Status GetElem(LinkList L,int i,ElemType *e) {
 	int j;
-	LinkList p; /*ÉùÃ÷Ò»Ö¸Õëp*/
-	p=L->next; /*ÈÃpÖ¸ÏòÁ´±íLµÄµÚÒ»¸ö½áµã*/
-	j=1; /*JÎª¼ÆÊıÆ÷*/
-	while(p && j<i) { /*p²»Îª¿ÕÇÒ¼ÆËãÆ÷j»¹Ã»ÓĞµÈÓÚiÊ±£¬Ñ­»·¼ÌĞø*/
-		p=p->next;/*ÈÃpÖ¸ÏòÏÂÒ»¸ö½áµã*/
+	LinkList p; /*å£°æ˜ä¸€æŒ‡é’ˆp*/
+	p=L->next; /*è®©pæŒ‡å‘é“¾è¡¨Lçš„ç¬¬ä¸€ä¸ªç»“ç‚¹*/
+	j=1; /*Jä¸ºè®¡æ•°å™¨*/
+	while(p && j<i) { /*pä¸ä¸ºç©ºä¸”è®¡ç®—å™¨jè¿˜æ²¡æœ‰ç­‰äºiæ—¶ï¼Œå¾ªç¯ç»§ç»­*/
+		p=p->next;/*è®©pæŒ‡å‘ä¸‹ä¸€ä¸ªç»“ç‚¹*/
 		++j;
 	}
 	if(!p|| j>i)
-		return ERROR;/*µÚi¸ö½áµã²»´æÔÚ*/
-	*e=p->data;/*È¡µÚi¸ö½áµãµÄÊı¾İ*/
+		return ERROR;/*ç¬¬iä¸ªç»“ç‚¹ä¸å­˜åœ¨*/
+	*e=p->data;/*å–ç¬¬iä¸ªç»“ç‚¹çš„æ•°æ®*/
 	return OK;
 }
 
 /*
-³õÊ¼Ìõ¼ş £ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ 1<=i<=ListLength(L)
-²Ù×÷Ìõ¼ş£ºÔÚLÖĞµÚi¸ö½áµãÎ»ÖÃÖ®Ç°²åÈëĞÂµÄÊı¾İÔªËØe,lµÄ³¤¶È¼Ó1
+åˆå§‹æ¡ä»¶ ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ 1<=i<=ListLength(L)
+æ“ä½œæ¡ä»¶ï¼šåœ¨Lä¸­ç¬¬iä¸ªç»“ç‚¹ä½ç½®ä¹‹å‰æ’å…¥æ–°çš„æ•°æ®å…ƒç´ e,lçš„é•¿åº¦åŠ 1
 */
 Status ListInsert(LinkList *L,int i,ElemType e) {
 	int j;
 	LinkList p,s;
 	p= *L;
 	j=1;
-	while(p && j<i) { /*Ñ°ÕÒµÚi-1¸ö½áµã*/
+	while(p && j<i) { /*å¯»æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹*/
 		p=p->next;
 		++j;
 	}
@@ -50,16 +50,16 @@ Status ListInsert(LinkList *L,int i,ElemType e) {
 	if(!p || j>i)
 		return ERROR;
 
-	s=(LinkList)malloc(sizeof(Node));/* Éú³ÉĞÂ½Úµã(C±ê×¼º¯Êı) sizeof²Ù×÷·ûÒÔ×Ö½ÚĞÎÊ½¸ø³öÁËÆä²Ù×÷ÊıµÄ´æ´¢´óĞ¡*/
+	s=(LinkList)malloc(sizeof(Node));/* ç”Ÿæˆæ–°èŠ‚ç‚¹(Cæ ‡å‡†å‡½æ•°) sizeofæ“ä½œç¬¦ä»¥å­—èŠ‚å½¢å¼ç»™å‡ºäº†å…¶æ“ä½œæ•°çš„å­˜å‚¨å¤§å°*/
 	s->data=e;
-	s->next=p->next; /*½«pµÄºó¼Ì½Úµã¸³Öµ¸øsµÄºó¼Ì*/
-	p->next=s;/*½«S¸³Öµ¸øpµÄºó¼Ì*/
+	s->next=p->next; /*å°†pçš„åç»§èŠ‚ç‚¹èµ‹å€¼ç»™sçš„åç»§*/
+	p->next=s;/*å°†Sèµ‹å€¼ç»™pçš„åç»§*/
 	return OK;
 
 }
 /*
- ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ£¬1<=i<=ListLength(L)
- ²Ù×÷½á¹û: É¾³ıLµÄµÚi¸ö½áµã ²¢ÓÃE·µ»ØÆäÖµ LµÄ³¤¶È¼õ1
+ åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ï¼Œ1<=i<=ListLength(L)
+ æ“ä½œç»“æœ: åˆ é™¤Lçš„ç¬¬iä¸ªç»“ç‚¹ å¹¶ç”¨Eè¿”å›å…¶å€¼ Lçš„é•¿åº¦å‡1
 */
 Status ListDelete(LinkList *L,int i,ElemType *e) {
 	int j;
@@ -67,36 +67,36 @@ Status ListDelete(LinkList *L,int i,ElemType *e) {
 	p=*L;
 	j=1;
 
-	while(p->next && j<i) { /*±éÀúÑ°ÕÒµÚi-1¸ö½áµã*/
+	while(p->next && j<i) { /*éå†å¯»æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹*/
 		p=p->next;
 		++j;
 	}
 
 	if(!(p->next) || j>1)
-		return ERROR;/*µÚi¸ö½áµã²»´æÔÚ*/
+		return ERROR;/*ç¬¬iä¸ªç»“ç‚¹ä¸å­˜åœ¨*/
 	q=p->next;
-	p->next=q->next;/*½«qµÄºó¼Ì¸³Öµ¸øpµÄºó¼Ì*/
-	*e=q->next;  /*½«q½áµãÖĞµÄÊı¾İ¸øe**/
-	free(q); /*ÈÃÏµÍ³»ØÊÕ´Ë½Úµã ÊÍ·ÅÄÚ´æ*/
+	p->next=q->next;/*å°†qçš„åç»§èµ‹å€¼ç»™pçš„åç»§*/
+	*e=q->next;  /*å°†qç»“ç‚¹ä¸­çš„æ•°æ®ç»™e**/
+	free(q); /*è®©ç³»ç»Ÿå›æ”¶æ­¤èŠ‚ç‚¹ é‡Šæ”¾å†…å­˜*/
 	return OK;
 }
 
 
 
-/*Ëæ»úÉú³Én¸öÔªËØµÄÖµ ½¨Á¢´ø±íÍ·½ÚµãµÄµ¥Á´ÏßĞÔ±í*/
+/*éšæœºç”Ÿæˆnä¸ªå…ƒç´ çš„å€¼ å»ºç«‹å¸¦è¡¨å¤´èŠ‚ç‚¹çš„å•é“¾çº¿æ€§è¡¨*/
 Status CreateListHead (LinkList *L,int n) {
 	LinkList p;
 	int i;
-	srand(time(0));/*³õÊ¼»¯Ëæ»úÊıÖÖ×Ó*/
+	srand(time(0));/*åˆå§‹åŒ–éšæœºæ•°ç§å­*/
 	*L=(LinkList)malloc(sizeof(Node));
-	(*L)->next=NULL;/*ÏÈ½¨Á¢Ò»¸ö´øÍ·½áµãµÄµ¥Á´±í*/
+	(*L)->next=NULL;/*å…ˆå»ºç«‹ä¸€ä¸ªå¸¦å¤´ç»“ç‚¹çš„å•é“¾è¡¨*/
 
 	for(i=0; i<n; i++) {
 
-		p=(LinkList)malloc(sizeof(Node));/*Éú³ÉĞÂ½Úµã*/
-		p->data=rand()%100+1;/*Ëæ»úÉú³É100ÒÔÄÚµÄÊı×Ö*/
+		p=(LinkList)malloc(sizeof(Node));/*ç”Ÿæˆæ–°èŠ‚ç‚¹*/
+		p->data=rand()%100+1;/*éšæœºç”Ÿæˆ100ä»¥å†…çš„æ•°å­—*/
 		p->next=(*L)->next;
-		(*L)->next=p;/*²åÈëµ½±íÍ·*/
+		(*L)->next=p;/*æ’å…¥åˆ°è¡¨å¤´*/
 
 	}
 
@@ -105,44 +105,44 @@ Status CreateListHead (LinkList *L,int n) {
 
 
 
-/*Ëæ»ú²úÉún¸öÔªËØµÄÖµ ½¨Á¢Æğ´ø±íÍ·½ÚµãµÄµ¥Á´ÏßĞÔ±í£¨Î²²å·¨£©*/
+/*éšæœºäº§ç”Ÿnä¸ªå…ƒç´ çš„å€¼ å»ºç«‹èµ·å¸¦è¡¨å¤´èŠ‚ç‚¹çš„å•é“¾çº¿æ€§è¡¨ï¼ˆå°¾æ’æ³•ï¼‰*/
 void CreateListTail(LinkList *L,int n) {
 	LinkList p,r;
 	int i;
-	srand(time(0));/*³õÊ¼»¯Ëæ»úÊıÖÖ×Ó*/
-	*L=(LinkList)malloc(sizeof(Node));/*ÎªÕû¸öÏßĞÔ±í*/
-	r=*L;/*rÎªÖ¸ÏòÎ²²¿µÄ½Úµã*/
+	srand(time(0));/*åˆå§‹åŒ–éšæœºæ•°ç§å­*/
+	*L=(LinkList)malloc(sizeof(Node));/*ä¸ºæ•´ä¸ªçº¿æ€§è¡¨*/
+	r=*L;/*rä¸ºæŒ‡å‘å°¾éƒ¨çš„èŠ‚ç‚¹*/
 
 	for(i=0; i<n; i++) {
-		p=(Node *)malloc(sizeof(Node));/*Éú³ÉĞÂ½Úµã*/
-		p->data=rand() %100+1;/*Ëæ»úÉú³É100ÒÔÄÚµÄÊı×Ö*/
-		r->next=p;/*½«±íÎ²ÖÕ¶Ë½ÚµãµÄÖ¸ÕëÖ¸ÏòĞÂ½Úµã*/
+		p=(Node *)malloc(sizeof(Node));/*ç”Ÿæˆæ–°èŠ‚ç‚¹*/
+		p->data=rand() %100+1;/*éšæœºç”Ÿæˆ100ä»¥å†…çš„æ•°å­—*/
+		r->next=p;/*å°†è¡¨å°¾ç»ˆç«¯èŠ‚ç‚¹çš„æŒ‡é’ˆæŒ‡å‘æ–°èŠ‚ç‚¹*/
 		r=p;
 	}
-	r->next=NULL;/*±íÊ¾µ±Ç°Á´±í½áÊø*/
+	r->next=NULL;/*è¡¨ç¤ºå½“å‰é“¾è¡¨ç»“æŸ*/
 
 }
 
 
 
-/*³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ ²Ù×÷½á¹û £º½«LÖØÖÃÎª¿Õ±í*/
+/*åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ æ“ä½œç»“æœ ï¼šå°†Lé‡ç½®ä¸ºç©ºè¡¨*/
 Status ClearList(LinkList *L) {
 	LinkList p,q;
-	p=(*L)->next; /*pÖ¸ÏòµÚÒ»¸ö½áµã*/
-	while(p) {  /*Ã»µ½±íÎ²*/
+	p=(*L)->next; /*pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹*/
+	while(p) {  /*æ²¡åˆ°è¡¨å°¾*/
 		q=p->next;
 		free(p);
 		p=q;
 	}
-	(*L)->next=NULL;/*Í·½áµãÖ¸ÕëÓòÎª¿Õ*/
+	(*L)->next=NULL;/*å¤´ç»“ç‚¹æŒ‡é’ˆåŸŸä¸ºç©º*/
 	return OK;
 }
 
 
-//¸öÈËËù¼Ó ²¢Ã»ÓĞ²âÊÔ¹¦ÄÜ 
+//ä¸ªäººæ‰€åŠ  å¹¶æ²¡æœ‰æµ‹è¯•åŠŸèƒ½ 
 int length(LinkList *L){
 	int length=0;
-	LinkList p=(*L)->next;//»ñµÃÍ·½áµã 
+	LinkList p=(*L)->next;//è·å¾—å¤´ç»“ç‚¹ 
 	while(p){
 		length++;
 		p=p->next;
@@ -154,7 +154,7 @@ int length(LinkList *L){
 void  main() {
 
 	LinkList list,start;
-	printf("ÇëÊäÈëµ¥Á´±íµÄÊı¾İ");
+	printf("è¯·è¾“å…¥å•é“¾è¡¨çš„æ•°æ®");
 	list=CreateListHead(list,10);
 	for(start =list->next; start!=NULL; start=start->data)
 		printf("%d",start->data);
@@ -163,3 +163,4 @@ void  main() {
 
 
 }
+
