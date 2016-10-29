@@ -1,4 +1,4 @@
-#include<stdio.h>/*线性表*/
+#include<stdio.h>/*线性表-顺序存储*/
 #define OK 1
 #define ERROR 0
 #define TRUE 1

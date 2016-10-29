@@ -1,3 +1,4 @@
+/*线性表-顺序存储*/
 public class Orderlinklist{
 int MAXSIZE=100;
 
