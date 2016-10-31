@@ -1,6 +1,6 @@
 import java.util.Random;
 
-/** 循环单链表  这个Demo经测试已完成   但是toString打印就会导致无限递归出错
+/**循环单链表  这个Demo经测试已完成   但是toString打印就会导致无限递归出错
  * 但是内部已经形成指针类似的环
  * Created by han on 2016/10/30.
  */

@@ -8,8 +8,8 @@ typedef int ElemType;/*ElemType根据实际情况而定 这里假设为int*/
 推荐看注释
 或者看java版本来进行理解
 只有一个Demo 在mergeLinkList
- 需要注意 对错我是没有试验过的 bug应该有 只是通过了编译
- 例行上传
+需要注意 对错我是没有试验过的 bug应该有 只是通过了编译
+例行上传
 */
 typedef int Status;
 typedef struct Node {
