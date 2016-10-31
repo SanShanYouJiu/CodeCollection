@@ -1,8 +1,7 @@
-
 import java.util.Random;
 
-/** 循环链表  这个Demo并没有完成 无法形成 最后会导致类包括类 无限递归出错 没有办法形成指针类似的环
- * 错误Demo 仅仅是备份上传 不建议观看
+/** 循环单链表  这个Demo经测试已完成   但是toString打印就会导致无限递归出错
+ * 但是内部已经形成指针类似的环
  * Created by han on 2016/10/30.
  */
 public class CycleLinkList {
@@ -12,19 +11,17 @@ public class CycleLinkList {
         linkList.insertNode("ce1",1);
         linkList.insertNode("ce01", 1);
         linkList.insertNode("ce2", 3);
+        linkList.GetElem(2);
         linkList.insertNode("ce02", 3);
         linkList.insertNode("ce4", 5);
         linkList.insertNode("ce3", 6);
 
         System.out.println("当前链表长度为：" + linkList.length());
         linkList.GetElem(1);
-        linkList.GetElem(0);
-        linkList.GetElem(2);
-        linkList.GetElem(3);
-        linkList.GetElem(4);
-        linkList.GetElem(5);
         linkList.delNode(1);
-
+        linkList.delNode(2);
+        linkList.GetElem(1);
+        linkList.GetElem(2);
         System.out.println("当前链表长度为：" + linkList.length());
         linkList.GetElem(2);
         linkList.GetElem(3);
@@ -34,10 +31,13 @@ public class CycleLinkList {
         linkList.CreateListTail(5);
         linkList.GetElem(12);
         System.out.println("--------------------------------");
-        linkList.iterator();
-         linkList.GetElem(20);
+        linkList.GetElem(9);
+        linkList.GetElem(10);
+        linkList.GetElem(11);
+        linkList.GetElem(12);
+        linkList.GetElem(13);
+        linkList.GetElem(14);
         linkList.ClearList();
-        linkList.GetElem(1);
     }
 }
 class LinkList{
@@ -51,21 +51,22 @@ class LinkList{
             this.data=data;
         }
 
-        @Override
-        public String toString() {
+       /* @Override//如果你要打印的话就产生了无限递归  因为是环
+               public String toString() {
             return "Node{" +
                     "data=" + data +
                     ", next=" + next +
                     '}';
-        }
+        }*/
     }
 
-    private  Node head=new Node();//头结点
+    private    Node head=new Node();//头结点
 
 
     public LinkList() {
-        this.head=head.next;
-    }
+        head.next = this.head;
+        this.head = head.next;
+    }//头结点在空结点时next的值是自身
 
     /*获取指定元素*/
     public  boolean GetElem(int i){
@@ -90,13 +91,12 @@ class LinkList{
     public void addNode(Object d){
         Node newNode = new Node(d);
         int i=1;
-        if(head == null){  //空链表，插入为头指针
-            head = newNode;
+        if( head.next==head){  //空链表，插入为头指针
+            head.next = newNode;
+            newNode.next=head;
         }else{
-            Node p = head;
-            newNode.next=p;
-            head=newNode;
-            System.out.println("p:"+p+"newNode:"+newNode);
+            newNode.next= head.next;
+            head.next=newNode;
         }
     }
 
@@ -113,14 +113,15 @@ class LinkList{
         Node curNode = head.next;//设置这个变量为了循环记忆使用
         while (true) {
             i++;
+            preNode = curNode;
+            curNode = preNode.next;
             if (i == index) {
                 //这个步骤就是为了在prenode与curnode中插入节点 下面同理
                 preNode.next = n;
                 n.next = curNode;
                 return true;
             }
-            preNode = curNode;
-            curNode = preNode.next;
+
         }
 
     }
@@ -131,26 +132,18 @@ class LinkList{
         if(index <1||index >length()){
             return false;
         }
-        //删除链表第一个节点
-        if(index ==1){
-            head=head.next;//head的下一个节点赋值给head本身 数据丢失 删除完毕
-            return true;
-        }else{
-            //不是第一个节点的情况下
             int i=1;//计数器
             Node preNode=head;
             Node curNode=preNode.next;//设置这个变量为了循环记忆使用
             while (curNode!=null) {//从头结点向下循环寻找
-
                 if(i==index){
                     preNode.next=curNode.next;
                     return true;
                 }
+                i++;
                 preNode=curNode;
                 curNode=preNode.next;
-                i++;
             }
-        }
         return true;
     }
 
@@ -158,13 +151,10 @@ class LinkList{
     /*返回链表长度*/
     public int length(){
         int length=0;//计数器
-        if (head == null) return  0;
+        if (head.next == head) return  0;
         Node p=head.next;
         while (p!=head) {
             length++;
-            if(p==null){
-               break;
-            }
             p=p.next;
         }
         return length;
@@ -181,8 +171,9 @@ class LinkList{
         Random random = new Random( );
 
         for (i = 1; i < n; i++) {
-            p[i] = new Node(random.nextInt(100));
-            System.out.println("插入顺序"+"i:["+i+"]"+"\t"+"CreateListHead:"+p[i]);
+            int  randomint=random.nextInt(100);
+            p[i] = new Node(randomint);
+            System.out.println("插入顺序"+"i:["+i+"]"+"\t"+"CreateListHead:"+randomint);
             p[i].next = p[0].next;
             p[0].next = p[i];//插入到表头
         }
@@ -201,26 +192,23 @@ class LinkList{
         Node p,r;
         int i;
         Random random = new Random( );
-        r= node[n-1] = new Node();// r为指向尾部的节点
-        r.next=head;
-        System.out.println(head);
-
-
+        r= new Node();//初始化
         Node prenode=head;
         Node curnode = head.next;
-        for (int j = 1; j <length() ; j++) {//元素需要保留一个 再加上一个prenode与curnode之间的缓冲
+        for (int j = 0; j <length() ; j++) {//遍历到当前最后一个结点
             curnode=prenode.next;
             prenode = curnode;
         }
         for (i = 0; i <n ; i++) {
-            p = node[i] = new Node(random.nextInt(100));// 每次都生成一个新节点:node[i] 随机填充数据
+            int rondomInt = random.nextInt(100);
+            p = node[i] = new Node(rondomInt);// 每次都生成一个新节点:node[i] 随机填充数据
             r.next = p;// 将尾结点指针定位到当前结点
-            p.next=head;
-            r=p;// 将当前结点定义为新节点  （只是r的位置被改变 值本身还在原来的node数组中 r代表了尾结点）
-            curnode.next=p;//error的地方 无限递归
-            prenode=curnode.next;
-            curnode=prenode;
-            System.out.println( "插入顺序"+"i:[" + i + "]"+"\t"+"CreateListTail:" + r  );
+            p.next = head;
+            r = p;// 将当前结点定义为新节点  （只是r的位置被改变 值本身还在原来的node数组中 r代表了尾结点）
+            curnode.next = r;//在这里形成环
+            prenode = curnode.next;
+            curnode = prenode;
+            System.out.println("插入顺序" + "i:[" + i + "]" + "\t" + "CreateListTail:" + rondomInt);
         }
 
 
@@ -232,7 +220,7 @@ class LinkList{
 
     }
 
-    /*迭代当前链表所有元素*/
+    /*迭代当前链表所有元素 因为是环 是不能迭代的 这个方法废弃了*/
     public  void iterator(){
         Node iteratorNode=head.next;
         Node iteratorNode2=iteratorNode.next;
@@ -247,11 +235,13 @@ class LinkList{
 
     /*初始条件：顺序线性表L已存在 操作结果 ：将L重置为空表*/
     public  void ClearList(){
-        head=null;
-        System.out.println(length());
+        head.next=head;
+        head=head.next;
+
     }
 
-    /*因为无法形成 这个方法就没有进行完善*/
+
+    /*因为无法打印  还有一些其他原因 与C语言的主要处理方式是一样的 这个方法就没有进行完善*/
     public void mergeLinkList(LinkList L,LinkList L2){
         LinkList rearA,rearB,p,q;
 
@@ -259,6 +249,3 @@ class LinkList{
 
 
 }
-
-
-
