@@ -1,11 +1,10 @@
-#include <stdio.h>
+#include <stdio.h>/*线性表的单链表存储结构*/
 #define OK 1
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
 #define MAXSIZE 20 /*存储空间初始化分配量*/
 typedef int ElemType;/*ElemType根据实际情况而定 这里假设为int*/
-/*线性表的单链表存储结构*/
 typedef int Status;
 typedef struct Node {
 	ElemType data;
