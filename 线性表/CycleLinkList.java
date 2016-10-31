@@ -31,6 +31,8 @@ public class CycleLinkList {
         linkList.CreateListTail(5);
         linkList.GetElem(12);
         System.out.println("--------------------------------");
+        linkList.GetElem(1);
+        linkList.GetElem(5);
         linkList.GetElem(9);
         linkList.GetElem(10);
         linkList.GetElem(11);
@@ -84,46 +86,28 @@ class LinkList{
 //        p.data;/*取第i个结点的数据*/·
         System.out.println("Get到的数据"+p.data);
         return true;
-
     }
 
-    /*防止插入头结点情况*/
-    public void addNode(Object d){
-        Node newNode = new Node(d);
-        int i=1;
-        if( head.next==head){  //空链表，插入为头指针
-            head.next = newNode;
-            newNode.next=head;
-        }else{
-            newNode.next= head.next;
-            head.next=newNode;
-        }
-    }
 
     /*插入指定位置*/
     public  boolean insertNode(Object o,int index){
-        if(index==1){
-            addNode(o);
-            return  true;
-        }
 
         int i=1;
         Node n=new Node(o);
         Node preNode = head;//从头结点开始
         Node curNode = head.next;//设置这个变量为了循环记忆使用
         while (true) {
+
+            if (i == index) {
+                //这个步骤就是为了在prenode与curnode中插入节点 下面同理
+                n.next = curNode;
+                preNode.next = n;
+                return true;
+            }
             i++;
             preNode = curNode;
             curNode = preNode.next;
-            if (i == index) {
-                //这个步骤就是为了在prenode与curnode中插入节点 下面同理
-                preNode.next = n;
-                n.next = curNode;
-                return true;
-            }
-
         }
-
     }
 
 
@@ -132,18 +116,18 @@ class LinkList{
         if(index <1||index >length()){
             return false;
         }
-            int i=1;//计数器
-            Node preNode=head;
-            Node curNode=preNode.next;//设置这个变量为了循环记忆使用
-            while (curNode!=null) {//从头结点向下循环寻找
-                if(i==index){
-                    preNode.next=curNode.next;
-                    return true;
-                }
-                i++;
-                preNode=curNode;
-                curNode=preNode.next;
+        int i=1;//计数器
+        Node preNode=head;
+        Node curNode=preNode.next;//设置这个变量为了循环记忆使用
+        while (curNode!=null) {//从头结点向下循环寻找
+            if(i==index){
+                preNode.next=curNode.next;
+                return true;
             }
+            i++;
+            preNode=curNode;
+            curNode=preNode.next;
+        }
         return true;
     }
 

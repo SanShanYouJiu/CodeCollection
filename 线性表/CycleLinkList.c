@@ -4,7 +4,9 @@
 #define TRUE 1
 #define FALSE 0
 typedef int ElemType;/*ElemType根据实际情况而定 这里假设为int*/
-/*线性表的单链表存储结构  --循环链表  个人所改 这本书内部只是大概介绍了一下
+/*线性表的单链表存储结构  --循环链表  个人所改 这本书内部只是大概介绍了一下 注意 我个人对C语言的语法忘的差不多了
+推荐看注释
+或者看java版本来进行理解
 只有一个Demo 在mergeLinkList
  需要注意 对错我是没有试验过的 bug应该有 只是通过了编译
  例行上传
@@ -19,7 +21,7 @@ typedef struct Node *LinkList;/*定义LinkList*/
 
 
 
-//创建单向循环链表  初始化时，头结点的指针指向自己
+//创建单向循环链表  初始化时，头结点的指针指向自己 注意：这个方法是正确的 这是经过测试的
 LinkList CreateSgCcLinkList(void)
 {
    int i,length=0,data=0;
@@ -83,7 +85,7 @@ Status GetElem(LinkList L,int i,ElemType *e) {
 Status ListInsert(LinkList *L,int i,ElemType e) {
 	int j;
 	LinkList p,s,r;
-	r= (*L);//头结点
+	r= *L;//头结点
 	p=r->next;
 	j=1;
 	while(p!=r && j<i) { /*寻找第i-1个结点*/
@@ -109,7 +111,7 @@ Status ListInsert(LinkList *L,int i,ElemType e) {
 Status ListDelete(LinkList *L,int i,ElemType *e) {
 	int j;
 	LinkList p,q,r;
-	r=(*L);//头结点
+	r=*L;//头结点
 	p=r->next;
 	j=1;
 
@@ -135,8 +137,8 @@ Status CreateListHead (LinkList *L,int n) {
 	int i;
 	srand(time(0));/*初始化随机数种子*/
 	*L=(LinkList)malloc(sizeof(Node));
-	phead=(*L);/*先建立一个带头结点的单链表*/
-    phead->next=phead;/*空结点时 头结点本身是头结点*/
+	phead=(*L);/*先建立一个带头结点的单链表 这里理解（*L）是头结点*/
+  phead->next=phead;/*空结点时 头结点本身是头结点*/
 
 	for(i=0; i<n; i++) {
 
@@ -153,7 +155,7 @@ Status CreateListHead (LinkList *L,int n) {
 void mergeLinkList(LinkList *L,LinkList *L2){
 LinkList rearA,rearB,p,q;
    rearA=*L;/*获取L尾结点   注意:我也不知道这样是否正确获取到*/
-   rearB=*L2;/*获取L2尾结点*/
+   rearB=*L2;/*获取L2尾结点 同上*/
    p=rearA->next;/*保存A表的头结点*/
    rearA->next=rearB->next->next; /*将本是指向B表的第一个结点（不是头结点）赋值给rearA->next*/
    q=rearB->next;
@@ -171,7 +173,7 @@ void CreateListTail(LinkList *L,int n) {
 	int i;
 	srand(time(0));/*初始化随机数种子*/
 	*L=(LinkList)malloc(sizeof(Node));/*为整个线性表*/
-	r=*L;/*r为指向尾部的节点*/
+	r=*L;/*r此时为指向尾部的节点*/
 
 	for(i=0; i<n; i++) {
 		p=(Node *)malloc(sizeof(Node));/*生成新节点*/
