@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Created by han on 2016/11/4.
  */
@@ -19,7 +21,7 @@ public class LinkStackDemo {
     }
 
     /**
-     * 链栈 栈顶 在此进行操作元素
+     * 链栈 栈顶 在此操作元素
      */
     class LinkStack{
         StackNode top;
@@ -82,6 +84,19 @@ public class LinkStackDemo {
        S.count=0;
      }
 
+    void  CreateListHead(int n){
+        LinkStack p,q;
+        Random random = new Random( );
+
+        for (int i = 0; i <n ; i++) {
+            StackNode s = new StackNode();
+             s.data=random.nextInt(100);
+             s.next=S.top;
+             S.top=s;
+            S.count++;
+        }
+    }
+
 
     public static void main(String[] args) {
         LinkStackDemo l = new LinkStackDemo();
@@ -93,6 +108,8 @@ public class LinkStackDemo {
         System.out.println(l.S.count);
         l.Pop(o);
         l.ClearStack();
+        System.out.println(l.S);
+        l.CreateListHead(5);
         System.out.println(l.S);
     }
 }

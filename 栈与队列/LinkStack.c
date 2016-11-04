@@ -39,5 +39,3 @@
 	  S->count--;
 	  return OK;
   }
-
-  
