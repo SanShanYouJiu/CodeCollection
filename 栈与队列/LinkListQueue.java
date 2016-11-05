@@ -1,4 +1,4 @@
-/**
+/** 链表队列
  * Created by han on 2016/11/5.
  */
 public class LinkListQueue {
@@ -67,7 +67,6 @@ public class LinkListQueue {
              Q.rear=Q.front;
         return  true;
     }
-
 
 
     int length(){

@@ -1,5 +1,5 @@
 /**
- * 允许插入的为队尾 删除的为队头
+ *  循环队列  允许插入的为队尾 删除的为队头
  * Created by han on 2016/11/5.
  */
 public class OrderQueue {
@@ -43,7 +43,7 @@ public class OrderQueue {
     }
 
     /**
-     * 若队列不空 则Q队头元素
+     * 若队列不空 则从队头删除一个元素
      * @param o
      * @return
      */
@@ -56,19 +56,14 @@ public class OrderQueue {
          return  true;
     }
 
+
     Boolean ClearQueue(){
         Q.front=0;
         Q.rear=0;
         return  true;
     }
 
-    Object GetElement(int n) {
-        Object o = new Object();
-        o = Q.data[n];
-        int s=(Q.front - Q.rear + MAXSIZE) % MAXSIZE;
 
-        return  o;
-    }
 
     public static void main(String[] args) {
         OrderQueue orderQueue = new OrderQueue();
