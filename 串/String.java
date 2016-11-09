@@ -28,7 +28,11 @@ public class StringTest {
 
             if (k == -1 || p[j] == p[k]) {
 
-                next[++j] = ++k;
+                if(p[++j] ==p[++k]){
+                    next[j]=next[k];
+                }else{
+                    next[j]=k;
+                }
 
             } else {
 
