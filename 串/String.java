@@ -3,6 +3,15 @@
  */
 public class StringTest {
 
+
+    public static void main(String[] args) {
+        int[] next = getNext("ABCDABD");
+        for (int i = 0; i <next.length ; i++) {
+            System.out.println("next[" + i + "]=" + next[i]);
+        }
+    }
+
+
     public static int[] getNext(String ps) {
 
         char[] p = ps.toCharArray();
