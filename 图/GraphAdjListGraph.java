@@ -1,3 +1,4 @@
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class GraphAdjListGraph {
     public    final  int MAXVEX=100;
     public    final  int INFINITY=65535;
     public    final  int MAX=100;
+    public    final  int MAXSIZE=5;
     // 邻接表
 
 
@@ -33,11 +35,11 @@ public class GraphAdjListGraph {
         }
     }
 
+
     class  GraphAdjList{
         AdjList[] adjList=new AdjList[MAXVEX];
         int numVertexes,numEdges;
     }
-
 
 
 
@@ -102,6 +104,80 @@ public class GraphAdjListGraph {
     }
 
 
+    class  Queue
+    {
+        Object[] data = new Object[MAXSIZE];
+        int front;
+        int rear;
+    }
+
+    boolean InitQueue(Queue Q){
+        Q.front=0;
+        Q.rear=0;
+        return  true;
+    }
+
+    boolean EnQueue(Queue Q,Object e){
+        if((Q.rear+1)%MAXSIZE ==Q.front)
+            return  false;
+        Q.data[Q.rear]=e;
+        Q.rear=(Q.rear+1)%MAXSIZE;
+
+        return  true;
+    }
+
+
+    Object DeQueue(Queue Q,Object e){
+        if(Q.front ==Q.rear)
+            return  false;
+        e=Q.data[Q.front];
+        Q.front=(Q.front+1)%MAXSIZE;
+        return  e;
+    }
+
+
+    boolean QueueEmpty(Queue Q){
+
+        if(Q.front==Q.rear)
+            return true;
+        else
+            return false;
+    }
+
+    void BFSTraverse(GraphAdjList GL ){
+
+        int i,j;
+        EdgeNode p;
+        Queue Q=new Queue();
+        for(i=0;i<GL.numVertexes;i++)
+            visited[i]=false;
+        InitQueue(Q);
+
+        for (i=0;i<GL.numVertexes;i++)
+        {
+            if(!visited[i])
+            {
+                visited[i]=true;
+                System.out.println(GL.adjList[i].data);
+                EnQueue(Q,i);
+                while (!QueueEmpty(Q)){
+                    i = (int) DeQueue(Q,i);
+                    p=GL.adjList[i].firstNode;
+                    while (p!=null){
+                        if(!visited[p.adjvex]){
+                            visited[p.adjvex]=true;
+                            System.out.println(GL.adjList[p.adjvex].data);
+                            EnQueue(Q,p.adjvex);
+                        }
+                        p=p.next;
+                    }
+
+                }
+            }
+        }
+    }
+
+
 
     public static void main(String[] args)   {
         GraphAdjListGraph graph = new GraphAdjListGraph();
@@ -109,6 +185,7 @@ public class GraphAdjListGraph {
         graph.CreateALGraph(graphAdjList);
 
         graph.DFSTraverse(graphAdjList);
+        graph.BFSTraverse(graphAdjList);
 
     }
 }

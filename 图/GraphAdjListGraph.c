@@ -3,100 +3,163 @@
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-#define MAXVEX 100  /*×î´ó¶¥µãÊı Ó¦ÓÉÓÃ»§¶¨Òå*/ 
-#define INFINITY 65535 /*ÓÃ65535±íÊ¾OO*/ 
-typedef char VertexType; /*¶¥µãÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå*/
-typedef int  EdgeType; /*±ßÉÏµÄÈ¨ÖµÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå*/ 
-#define  MAX 100 
-typedef  int  Boolean;/*BooleanÊÇ²¼¶ûÀàĞÍ ÆäÖµÊÇTrue»òFalse*/
-Boolean visited[MAX]; /*·ÃÎÊ±êÊ¶µÄÊı×é*/
+#define MAXSIZE 100
+#define MAXVEX 100  /*æœ€å¤§é¡¶ç‚¹æ•° åº”ç”±ç”¨æˆ·å®šä¹‰*/
+#define INFINITY 65535 /*ç”¨65535è¡¨ç¤ºOO*/
+typedef char VertexType; /*é¡¶ç‚¹ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰*/
+typedef int  EdgeType; /*è¾¹ä¸Šçš„æƒå€¼ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰*/
+#define  MAX 100
+typedef int QElemType;
+typedef int Status;
+typedef  int  Boolean;/*Booleanæ˜¯å¸ƒå°”ç±»å‹ å…¶å€¼æ˜¯Trueæˆ–False*/
+Boolean visited[MAX]; /*è®¿é—®æ ‡è¯†çš„æ•°ç»„*/
 
 
- typedef struct EdgeNode /*±ß±í½áµã*/
-{ 
-      int adjvex; /*ÁÚ½ÓµãÓò ´æ´¢¸Ã¶¥µã¶ÔÓ¦µÄÏÂ±ê*/
-       EdgeType weight; /*ÓÃÓÚ´æ´¢È¨Öµ ¶ÔÓÚ·ÇÍøÍ¼¿ÉÒÔ²»ĞèÒª*/ 
-       struct EdgeNode *next;/*Á´Óò Ö¸ÏòÏÂÒ»¸öÁÚ½áµã*/ 
-}EdgeNode;
+typedef struct EdgeNode { /*è¾¹è¡¨ç»“ç‚¹*/
+	int adjvex; /*é‚»æ¥ç‚¹åŸŸ å­˜å‚¨è¯¥é¡¶ç‚¹å¯¹åº”çš„ä¸‹æ ‡*/
+	EdgeType weight; /*ç”¨äºå­˜å‚¨æƒå€¼ å¯¹äºéç½‘å›¾å¯ä»¥ä¸éœ€è¦*/
+	struct EdgeNode *next;/*é“¾åŸŸ æŒ‡å‘ä¸‹ä¸€ä¸ªé‚»ç»“ç‚¹*/
+} EdgeNode;
 
- typedef struct VertexNode /*¶¥µã±í½áµã*/
- {
- 	VertexType data; /*¶¥µãÓò ´æ´¢¶¥µãĞÅÏ¢*/
- 	EdgeNode *firstedge;/*±ß±íÍ·Ö¸Õë*/
- }VertexNode,AdjList[MAXVEX];
- 
- 
- 
- typedef struct
- {
- 	AdjList adjlist;
- 	int numVertexes,numEdges;/*Í¼ÖĞµ±Ç°¶¥µãÊıºÍ±ßÊı*/
-  }GraphAdjList;
-  
-  /*½¨Á¢Í¼µÄÁÚ½Ó±í½á¹¹*/
- void CreateALGraph(GraphAdjList *G)
- {
- 	int i,j,k;
- 	EdgeNode *e;
- 	printf("ÊäÈë¶¥µãÊıºÍ±ßÊı:\n");
- 	scanf("%d,%d",&G->numVertexes,&G->numEdges);/*ÊäÈë¶¥µãÊıºÍ±ßÊı*/
- 	for(i=0;i<G->numVertexes;i++)
-	 {
-	 	scanf(&G->adjlist[i].data);/*ÊäÈë¶¥µãĞÅÏ¢*/ 
-	 	G->adjlist[i].firstedge=NULL;/*½«±ß±íÖÃÎª¿Õ±í*/ 
-	  } 
-	  for(k=0;k<G->numEdges;k++)/*½¨Á¢±ß±í*/ 
-	  {
-	  printf("ÊäÈë±ß(vi,vj)ÉÏµÄ¶¥µãĞòºÅ:\n");
-	  scanf("%d,%d",&i,&j);/*ÊäÈë±ß(vi,vj)ÉÏµÄ¶¥µãĞòºÅ*/
-	  e=(EdgeNode *)malloc(sizeof(EdgeNode));/*ÏòÄÚ´æÉêÇë¿Õ¼ä*/
-	                                          /*Éú³É±ß±í½áµã*/
-      e->adjvex=j;/*ÁÚ½ÓĞòºÅj*/
-	  e->next=G->adjlist[i].firstedge; /*½«eÖ¸ÕëÖ¸Ïòµ±Ç°¶¥µãÖ¸ÏòµÄ½Úµã*/
-	  G->adjlist[i].firstedge=e;/*½«µ±Ç°¶¥µãµÄÖ¸ÕëÖ¸Ïòe*/
-	  e=(EdgeNode *)malloc(sizeof(EdgeNode));/*ÏòÄÚ´æÉêÇë¿Õ¼ä*/		
-	                                          /*Éú³É±ß±í½áµã*/
-      e->adjvex=i;/*ÁÚ½ÓĞòºÅÎªi*/
-	  e->next=G->adjlist[j].firstedge;/*½«eÖ¸ÕëÖ¸Ïòµ±Ç°¶¥µãÖ¸ÏòµÄ½Úµã*/
-	  G->adjlist[j].firstedge=e;/*½«µ±Ç°¶¥µãµÄÖ¸ÕëÖ¸Ïòe*/							   	
-	  }
-  } 
-  
-  
-     //ÁÚ½Ó±íµÄÉî¶ÈÓÅÏÈËã·¨ 
-	  void  DFS(GraphAdjList *GL,int i)
-	  {
-	  	EdgeNode *p;
-	  	visited[i]=TRUE;
-	  	printf("%c",GL->adjlist[i].data); //´òÓ¡½áµã Ò²¿ÉÒÔ½øĞĞÆäËû²Ù×÷ 
-	  	p=GL->adjlist[i].firstedge;
-	  	while(p)
-	  	{
-	  		if(!visited[p->adjvex])
-             DFS(GL,p->adjvex); //¶ÔÎª·ÃÎÊµÄÁÚ½Ó¶¥µãµİ¹éµ÷ÓÃ 
-             p=p->next;
-		  }
-	   } 
-	   
-	   
-	   
-	   
-	   /*ÁÚ½Ó±íµÄÉî¶È±éÀú²Ù×÷*/
-	   void DFSTraverse(GraphAdjList GL)
-	   {
-	   	int i;
-	   	for(i=0;i<GL->numVertexes;i++)
-	   	 visited[i]=FALSE;
-	   	 for(i=0;i<GL->numVertexes;i++)
-	   	 if(!visited[i]) // ¶ÔÎ´·ÃÎÊ¹ıµÄ½áµãµ÷ÓÃDFS ÈôÊÇÁªÍ¨Í¼ Ö»»áÖ´ĞĞÒ»´Î
-		  DFS(GL,i); 
-		
-		} 
-		
-		
-		
-		
-		
-		
-		
-		
+typedef struct VertexNode { /*é¡¶ç‚¹è¡¨ç»“ç‚¹*/
+	VertexType data; /*é¡¶ç‚¹åŸŸ å­˜å‚¨é¡¶ç‚¹ä¿¡æ¯*/
+	EdgeNode *firstedge;/*è¾¹è¡¨å¤´æŒ‡é’ˆ*/
+} VertexNode,AdjList[MAXVEX];
+
+
+
+typedef struct {
+	AdjList adjlist;
+	int numVertexes,numEdges;/*å›¾ä¸­å½“å‰é¡¶ç‚¹æ•°å’Œè¾¹æ•°*/
+} GraphAdjList;
+
+/*å»ºç«‹å›¾çš„é‚»æ¥è¡¨ç»“æ„*/
+void CreateALGraph(GraphAdjList *G) {
+	int i,j,k;
+	EdgeNode *e;
+	printf("è¾“å…¥é¡¶ç‚¹æ•°å’Œè¾¹æ•°:\n");
+	scanf("%d,%d",&G->numVertexes,&G->numEdges);/*è¾“å…¥é¡¶ç‚¹æ•°å’Œè¾¹æ•°*/
+	for(i=0; i<G->numVertexes; i++) {
+		scanf(&G->adjlist[i].data);/*è¾“å…¥é¡¶ç‚¹ä¿¡æ¯*/
+		G->adjlist[i].firstedge=NULL;/*å°†è¾¹è¡¨ç½®ä¸ºç©ºè¡¨*/
+	}
+	for(k=0; k<G->numEdges; k++) { /*å»ºç«‹è¾¹è¡¨*/
+		printf("è¾“å…¥è¾¹(vi,vj)ä¸Šçš„é¡¶ç‚¹åºå·:\n");
+		scanf("%d,%d",&i,&j);/*è¾“å…¥è¾¹(vi,vj)ä¸Šçš„é¡¶ç‚¹åºå·*/
+		e=(EdgeNode *)malloc(sizeof(EdgeNode));/*å‘å†…å­˜ç”³è¯·ç©ºé—´*/
+		/*ç”Ÿæˆè¾¹è¡¨ç»“ç‚¹*/
+		e->adjvex=j;/*é‚»æ¥åºå·j*/
+		e->next=G->adjlist[i].firstedge; /*å°†eæŒ‡é’ˆæŒ‡å‘å½“å‰é¡¶ç‚¹æŒ‡å‘çš„èŠ‚ç‚¹*/
+		G->adjlist[i].firstedge=e;/*å°†å½“å‰é¡¶ç‚¹çš„æŒ‡é’ˆæŒ‡å‘e*/
+		e=(EdgeNode *)malloc(sizeof(EdgeNode));/*å‘å†…å­˜ç”³è¯·ç©ºé—´*/
+		/*ç”Ÿæˆè¾¹è¡¨ç»“ç‚¹*/
+		e->adjvex=i;/*é‚»æ¥åºå·ä¸ºi*/
+		e->next=G->adjlist[j].firstedge;/*å°†eæŒ‡é’ˆæŒ‡å‘å½“å‰é¡¶ç‚¹æŒ‡å‘çš„èŠ‚ç‚¹*/
+		G->adjlist[j].firstedge=e;/*å°†å½“å‰é¡¶ç‚¹çš„æŒ‡é’ˆæŒ‡å‘e*/
+	}
+}
+
+
+//é‚»æ¥è¡¨çš„æ·±åº¦ä¼˜å…ˆç®—æ³•
+void  DFS(GraphAdjList *GL,int i) {
+	EdgeNode *p;
+	visited[i]=TRUE;
+	printf("%c",GL->adjlist[i].data); //æ‰“å°ç»“ç‚¹ ä¹Ÿå¯ä»¥è¿›è¡Œå…¶ä»–æ“ä½œ
+	p=GL->adjlist[i].firstedge;
+	while(p) {
+		if(!visited[p->adjvex])
+			DFS(GL,p->adjvex); //å¯¹ä¸ºè®¿é—®çš„é‚»æ¥é¡¶ç‚¹é€’å½’è°ƒç”¨
+		p=p->next;
+	}
+}
+
+
+
+
+/*é‚»æ¥è¡¨çš„æ·±åº¦éå†æ“ä½œ*/
+void DFSTraverse(GraphAdjList *GL) {
+	int i;
+	for(i=0; i<GL->numVertexes; i++)
+		visited[i]=FALSE;
+	for(i=0; i<GL->numVertexes; i++)
+		if(!visited[i]) // å¯¹æœªè®¿é—®è¿‡çš„ç»“ç‚¹è°ƒç”¨DFS è‹¥æ˜¯è”é€šå›¾ åªä¼šæ‰§è¡Œä¸€æ¬¡
+			DFS(GL,i);
+
+}
+
+
+typedef struct {
+	QElemType data[MAXSIZE];
+	int front;/*å¤´æŒ‡é’ˆ*/
+	int rear;/*å°¾æŒ‡é’ˆ è‹¥é˜Ÿåˆ—ä¸ç©º æŒ‡å‘é˜Ÿåˆ—å°¾å…ƒç´ çš„ä¸‹ä¸€ä¸ªä½ç½®*/
+} Queue;
+
+
+/*åˆå§‹åŒ–ä¸€ä¸ªç©ºé˜Ÿåˆ—Q*/
+Status InitQueue(Queue *Q) {
+	Q->front=0;
+	Q->rear=0;
+	return OK;
+}
+
+
+
+/*è‹¥é˜Ÿåˆ—æœªæ»¡ åˆ™æ’å…¥å…ƒç´ eä¸ºQçš„é˜Ÿå°¾å…ƒç´ */
+Status EnQueue (Queue *Q,QElemType e) {
+	if((Q->rear+1) %MAXSIZE==Q->front)/*é˜Ÿåˆ—æ»¡çš„åˆ¤æ–­*/
+		return ERROR;
+	Q->data[Q->rear] =e;/*å°†å…ƒç´ eèµ‹å€¼ç»™é˜Ÿå°¾*/
+	Q->rear=(Q->rear+1)%MAXSIZE;/*rearæŒ‡é’ˆå‘åç§»ä¸€ä½ç½®*/
+	/*è‹¥åˆ°æœ€ååˆ™è½¬åˆ°æ•°ç»„å¤´éƒ¨*/
+	return OK;
+}
+
+
+
+/*è‹¥é˜Ÿåˆ—ä¸ç©º åˆ™åˆ é™¤Qä¸­é˜Ÿå¤´å…ƒç´  åˆ™eè¿”å›å…¶å€¼*/
+Status DeQueue(Queue *Q,QElemType *e) {
+	if(Q->front == Q->rear)/*é˜Ÿåˆ—ç©ºçš„åˆ¤æ–­*/
+		return ERROR;
+	*e=Q->data[Q->front];/*å°†é˜Ÿå¤´å…ƒç´ èµ‹å€¼ç»™e*/
+	Q->front=(Q->front+1)%MAXSIZE;/*frontæŒ‡é’ˆå‘åç§»ä¸€ä½ç½®*/
+	/*è‹¥åˆ°æœ€ååˆ™è½¬åˆ°æ•°ç»„å¤´éƒ¨*/
+	return OK;
+}
+
+
+
+Status QueueEmpty(Queue Q) {
+	if(Q.front==Q.rear)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+//é‚»æ¥è¡¨çš„å¹¿åº¦éå†ç®—æ³•
+void BFSTraverse(GraphAdjList *GL) {
+	int i;
+	EdgeNode *p;
+	Queue Q;
+	for(i=0; i<GL->numVertexes; i++)
+		visited[i]=FALSE;
+	InitQueue(&Q);
+	for(i=0; i<GL->numVertexes; i++) {
+		if(!visited[i]) {
+			visited[i]=TRUE;
+			printf("%c",GL->adjlist[i].data);//æ‰“å°èŠ‚ç‚¹ ä¹Ÿå¯ä»¥å…¶ä»–æ“ä½œ
+			EnQueue(&Q,i);
+			while(!QueueEmpty(Q)) {
+				DeQueue(&Q,&i);
+				p=GL->adjlist[i].firstedge;//æ‰¾åˆ°å½“å‰é¡¶ç‚¹è¾¹è¡¨é“¾è¡¨å¤´æŒ‡é’ˆ
+				while(p) {
+					if(!visited[p->adjvex]) { //è‹¥æ­¤é¡¶ç‚¹æœªè¢«è®¿é—®
+						visited[p->adjvex]=TRUE;
+						printf("%c",GL->adjlist[p->adjvex].data);
+						EnQueue(&Q,p->adjvex);  //å°†æ­¤é¡¶ç‚¹å…¥é˜Ÿåˆ—
+					}
+					p=p->next;//æŒ‡é’ˆæŒ‡å‘ä¸‹ä¸€ä¸ªé‚»æ¥ç‚¹
+				}
+			}
+		}
+	}
+}

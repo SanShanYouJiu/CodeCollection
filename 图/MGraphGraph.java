@@ -1,14 +1,15 @@
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 /**
-无向图邻接矩阵
  * Created by han on 2016/12/7.
  */
 public class MGraphGraph {
 
 
     public    final  int MAXVEX=100;
+    public    final  int MAXSIZE=5;
     public    final  int MAX=100;
     public    final  int INFINITY=65535;
 
@@ -30,6 +31,46 @@ public class MGraphGraph {
         }
     }
 
+
+    class  Queue
+    {
+        Object[] data = new Object[MAXSIZE];
+        int front;
+        int rear;
+    }
+
+    boolean InitQueue(Queue Q){
+        Q.front=0;
+        Q.rear=0;
+        return  true;
+    }
+
+    boolean EnQueue(Queue Q,Object e){
+    if((Q.rear+1)%MAXSIZE ==Q.front)
+       return  false;
+        Q.data[Q.rear]=e;
+        Q.rear=(Q.rear+1)%MAXSIZE;
+
+     return  true;
+    }
+
+
+    Object DeQueue(Queue Q,Object e){
+        if(Q.front ==Q.rear)
+            return  false;
+        e=Q.data[Q.front];
+        Q.front=(Q.front+1)%MAXSIZE;
+        return  e;
+    }
+
+
+    boolean QueueEmpty(Queue Q){
+
+        if(Q.front==Q.rear)
+            return true;
+        else
+            return false;
+    }
 
 
     void CreateMGrapht(MGraph G){
@@ -58,6 +99,8 @@ public class MGraphGraph {
         }
     }
 
+
+
     boolean[] visited = new boolean[MAX];
 
 
@@ -73,6 +116,7 @@ public class MGraphGraph {
 
 
 
+
     void  DFSTraverse(MGraph G){
         int i;
         for (i=0;i<G.numVertexes;i++)
@@ -81,6 +125,38 @@ public class MGraphGraph {
             if(!visited[i])//对未访问过的顶点调用DFS 若是连通图 只会执行一次
                 DFS(G,i);
     }
+
+
+
+
+    void BFSTraverse(MGraph G ){
+
+    int i,j;
+    Queue Q=new Queue();
+        for(i=0;i<G.numVertexes;i++)
+            visited[i]=false;
+        InitQueue(Q);
+        for (i=0;i<G.numVertexes;i++)
+        {
+            if(!visited[i])
+            {
+                visited[i]=true;
+                System.out.println(G.vexs[i]);
+                EnQueue(Q,i);
+                while (!QueueEmpty(Q)){
+                 i = (int) DeQueue(Q,i);
+                   for (j=0;j<G.numVertexes;j++){
+                       if(G.arc[i][j]==1&&!visited[j]){
+                           visited[j]=true;
+                           System.out.println(G.vexs[j]);
+                           EnQueue(Q,j);
+                       }
+                   }
+                }
+            }
+        }
+    }
+
 
 
     public static void main(String[] args)   {
@@ -92,6 +168,7 @@ public class MGraphGraph {
 //        GraphAdjList graphAdjList = new Graph().new GraphAdjList();
 //        graph.CreateALGraph(graphAdjList);
         graph.DFSTraverse(mGraph);
+        graph.BFSTraverse(mGraph);
 
     }
 }
