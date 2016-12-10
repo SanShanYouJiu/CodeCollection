@@ -1,5 +1,4 @@
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /** 无向图邻接表
@@ -15,7 +14,7 @@ public class GraphAdjListGraph {
     // 邻接表
 
 
-    class EdgeNode{
+    class EdgeNode{/*边表结点*/
         int adjvex;
         int weight;
         EdgeNode next;
@@ -127,7 +126,8 @@ public class GraphAdjListGraph {
     }
 
 
-    Object DeQueue(Queue Q,Object e){
+    Object DeQueue(Queue Q){
+        Object e;
         if(Q.front ==Q.rear)
             return  false;
         e=Q.data[Q.front];
@@ -144,9 +144,10 @@ public class GraphAdjListGraph {
             return false;
     }
 
+
     void BFSTraverse(GraphAdjList GL ){
 
-        int i,j;
+        int i;
         EdgeNode p;
         Queue Q=new Queue();
         for(i=0;i<GL.numVertexes;i++)
@@ -161,7 +162,7 @@ public class GraphAdjListGraph {
                 System.out.println(GL.adjList[i].data);
                 EnQueue(Q,i);
                 while (!QueueEmpty(Q)){
-                    i = (int) DeQueue(Q,i);
+                    i = (int) DeQueue(Q);
                     p=GL.adjList[i].firstNode;
                     while (p!=null){
                         if(!visited[p.adjvex]){
@@ -176,6 +177,8 @@ public class GraphAdjListGraph {
             }
         }
     }
+
+
 
 
 

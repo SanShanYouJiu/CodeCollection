@@ -55,7 +55,8 @@ public class MGraphGraph {
     }
 
 
-    Object DeQueue(Queue Q,Object e){
+    Object DeQueue(Queue Q){
+        Object e;
         if(Q.front ==Q.rear)
             return  false;
         e=Q.data[Q.front];
@@ -111,7 +112,7 @@ public class MGraphGraph {
          System.out.println(G.vexs[i]);
          for ( j = 0; j <G.numVertexes ; j++)
              if(G.arc[i][j]==1 && !visited[j])
-                 DFS(G,j);
+                 DFS(G, j);
      }
 
 
@@ -144,7 +145,7 @@ public class MGraphGraph {
                 System.out.println(G.vexs[i]);
                 EnQueue(Q,i);
                 while (!QueueEmpty(Q)){
-                 i = (int) DeQueue(Q,i);
+                 i = (int) DeQueue(Q);
                    for (j=0;j<G.numVertexes;j++){
                        if(G.arc[i][j]==1&&!visited[j]){
                            visited[j]=true;
