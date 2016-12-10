@@ -1,6 +1,7 @@
+
 import java.util.Random;
 
-/**循环单链表  这个Demo经测试已完成   但是toString打印就会导致无限递归出错
+/** 循环单链表  这个Demo经测试已完成   但是toString打印就会导致无限递归出错
  * 但是内部已经形成指针类似的环
  * Created by han on 2016/10/30.
  */
@@ -40,6 +41,7 @@ public class CycleLinkList {
         linkList.GetElem(13);
         linkList.GetElem(14);
         linkList.ClearList();
+        linkList.iterator();
     }
 }
 class LinkList{
@@ -87,6 +89,7 @@ class LinkList{
         System.out.println("Get到的数据"+p.data);
         return true;
     }
+
 
 
     /*插入指定位置*/
@@ -144,6 +147,7 @@ class LinkList{
         return length;
     }
 
+
     /*随机生成n个元素的值 建立带表头节点的单链线性表
      始终让头结点在第一个位置 头插法 头结点为空
     */
@@ -168,6 +172,9 @@ class LinkList{
 
         System.out.println("当前链表长度为："+length());
     }
+
+
+
 
 
     /*随机产生n个元素的值 建立起带表头结点的单链线性表  尾插法*/
@@ -204,14 +211,14 @@ class LinkList{
 
     }
 
-    /*迭代当前链表所有元素 因为是环 是不能迭代的 这个方法废弃了*/
+    /*迭代当前链表所有元素*/
     public  void iterator(){
         Node iteratorNode=head.next;
         Node iteratorNode2=iteratorNode.next;
         for (int ii = 2; ii <length() ; ii++) {
             iteratorNode=iteratorNode2;
             iteratorNode2=iteratorNode.next;
-            System.out.println(iteratorNode);
+            System.out.println(iteratorNode.data);
         }
     }
 
@@ -225,7 +232,7 @@ class LinkList{
     }
 
 
-    /*因为无法打印  还有一些其他原因 与C语言的主要处理方式是一样的 这个方法就没有进行完善*/
+    /*与C语言的主要处理方式是一样的 这个方法就没有进行完善*/
     public void mergeLinkList(LinkList L,LinkList L2){
         LinkList rearA,rearB,p,q;
 
