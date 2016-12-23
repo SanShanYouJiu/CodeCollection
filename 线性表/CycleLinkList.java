@@ -40,8 +40,8 @@ public class CycleLinkList {
         linkList.GetElem(12);
         linkList.GetElem(13);
         linkList.GetElem(14);
-        linkList.ClearList();
         linkList.iterator();
+        linkList.ClearList();
     }
 }
 class LinkList{
