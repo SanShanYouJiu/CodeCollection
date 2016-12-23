@@ -1,8 +1,7 @@
-
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**Prim算法
+/**prim算法
  * Created by han on 2016/12/23.
  */
 public class Prim {
@@ -82,6 +81,8 @@ public class Prim {
               }
               j++;
           }
+          System.out.println(adjvex[k]+""+k);
+          lowcost[k]=0;
           for (j=1;j<G.numVertexes;j++) {
               if (lowcost[j] != 0 && G.arc[k][j] < lowcost[j]) {
                   lowcost[j] = G.arc[k][j];
@@ -92,5 +93,10 @@ public class Prim {
   }
 
 
-
+    public static void main(String[] args) {
+        MGraph G = new Prim().new MGraph();
+        Prim p = new Prim();
+        p.CreateMGrapht(G);
+        p.MiniSpanTree_Prim(G);
+    }
 }
