@@ -2,7 +2,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**Kruskal算法 内部随便用的冒泡排序 如果以后有机会再改进
+/**Kruskal算法 内部随便用的冒泡排序 如果以后有机会再改进 -最小生成树
  * Created by han on 2016/12/24.
  */
 public class Kruskal {

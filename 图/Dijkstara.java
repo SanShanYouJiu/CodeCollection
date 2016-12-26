@@ -1,16 +1,19 @@
+
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**prim算法 -最小生成树
- * Created by han on 2016/12/23.
+/**Dijkstara算法 --最短路径
+ * Created by han on 2016/12/26.
  */
-public class Prim {
-
+public class Dijkstara {
 
     public    final  int MAXVEX=100;
     public    final  int MAXSIZE=5;
     public    final  int MAX=100;
     public    final  int INFINITY=65535;
+
+    public int[] Patharc = new int[MAXVEX];
+    public int[] ShortPathTable = new int[MAXVEX];
 
     //  邻接矩阵
 
@@ -31,7 +34,7 @@ public class Prim {
     }
 
 
-    void CreateMGrapht(MGraph G){
+    void CreateMGraph(MGraph G){
 
         int i,j,k,w;
 
@@ -58,45 +61,46 @@ public class Prim {
     }
 
 
-  void  MiniSpanTree_Prim(MGraph G){
-      int min,i,j,k;
-      int[] adjvex = new int[MAXVEX];
-      int[] lowcost = new int[MAXVEX];
+    void   ShortestPath_Dijkstar(MGraph G,int v0,int[] patharc,int[] shortPathTable){
+        int v,w,k=0,min;
 
-      lowcost[0]=0;
-      adjvex[0]=0;
-      for (i=1;i<G.numVertexes;i++) {
-          lowcost[i] = G.arc[0][i];
-          adjvex[i]=0;
-      }
+        boolean[] Namefinal = new boolean[MAXVEX];
+        for (v=0;v<G.numVertexes;v++){
+            Namefinal[v] =false;
+            shortPathTable[v]=G.arc[0][v];
+            patharc[v]=-1;
+        }
+        shortPathTable[v0]=0;
+        Namefinal[v0]=true;
 
-      for (i=1;i<G.numVertexes;i++) {
-          min = INFINITY;
-          j=1;k=0;
-          while (j < G.numVertexes) {
+        for(v=0;v<G.numVertexes;v++){
+            min=INFINITY;
 
-              if(lowcost[j]!=0&&lowcost[j]<min) {
-                  min = lowcost[j];
-                  k=j;
-              }
-              j++;
-          }
-          System.out.println(adjvex[k]+""+k);
-          lowcost[k]=0;
-          for (j=1;j<G.numVertexes;j++) {
-              if (lowcost[j] != 0 && G.arc[k][j] < lowcost[j]) {
-                  lowcost[j] = G.arc[k][j];
-                  adjvex[j]=k;
-              }
-          }
-      }
-  }
+            for (w = 0; w < G.numVertexes; w++) {
+                if(!Namefinal[w] && shortPathTable[w]<min) {
+                    k = w;
+                    min = shortPathTable[w];
+                }
+            }
 
+            for (w=0;w<G.numVertexes;w++){
+                if(!Namefinal[w]&& (min+G.arc[k][w])<shortPathTable[w]){
+                    shortPathTable[w]=min+ G.arc[k][w];
+                    patharc[w]=k;
+                }
+            }
+        }
+
+        for (v=0;v<G.numVertexes;v++){
+            System.out.println("shortPathTable :"+shortPathTable[v]
+            +"patharc :"+patharc[v]);
+        }
+    }
 
     public static void main(String[] args) {
-        MGraph G = new Prim().new MGraph();
-        Prim p = new Prim();
-        p.CreateMGrapht(G);
-        p.MiniSpanTree_Prim(G);
+        MGraph G = new Dijkstara().new MGraph();
+        Dijkstara D = new Dijkstara();
+        D.CreateMGraph(G);
+        D.ShortestPath_Dijkstar(G,0,D.Patharc,D.ShortPathTable);
     }
 }

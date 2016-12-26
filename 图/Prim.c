@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> //prim算法 -最小生成树
 #define OK 1
 #define ERROR 0
 #define TRUE 1
@@ -60,5 +60,3 @@ void MinniSpanTree_Prim(MGraph G)
 		}
 	}
  }
-
-  
