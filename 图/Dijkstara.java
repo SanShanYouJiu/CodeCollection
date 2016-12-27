@@ -64,11 +64,11 @@ public class Dijkstara {
     void   ShortestPath_Dijkstar(MGraph G,int v0,int[] patharc,int[] shortPathTable){
         int v,w,k=0,min;
 
-        boolean[] Namefinal = new boolean[MAXVEX];
+        boolean[] Namefinal = new boolean[MAXVEX];//Namefinal对应C语言版本的final数组 --在JAVA中final是保留关键字
         for (v=0;v<G.numVertexes;v++){
             Namefinal[v] =false;
             shortPathTable[v]=G.arc[0][v];
-            patharc[v]=-1;
+            patharc[v]=0;
         }
         shortPathTable[v0]=0;
         Namefinal[v0]=true;
