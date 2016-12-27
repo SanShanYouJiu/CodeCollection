@@ -82,7 +82,7 @@ public class Dijkstara {
                     min = shortPathTable[w];
                 }
             }
-
+           Namefinal[k]=true;
             for (w=0;w<G.numVertexes;w++){
                 if(!Namefinal[w]&& (min+G.arc[k][w])<shortPathTable[w]){
                     shortPathTable[w]=min+ G.arc[k][w];
