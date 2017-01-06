@@ -1,4 +1,4 @@
-#include <stdio.h> //Floyd 算法 --最短路径算法
+#include <stdio.h>
 #define OK 1
 #define ERROR 0
 #define TRUE 1
@@ -57,11 +57,11 @@ void ShortestPath_Floyd(MGraph G,Pathmatirx *P,ShortPathTable *D) {
 	for(v=0; v<G.numVertexes; ++v) {
 		for(w=v+1; w<G.numVertexes; w++) {
 			printf("v%d-v%d weight: %d",v,w,(*D)[v][w]);
-			k=P[v][w];         //获得第一个路径顶点下标
+			k=(*P)[v][w];         //获得第一个路径顶点下标
 			printf("path : %d",v); //打印源点
 			while(k!=w) { //如果路径顶点下标不是终点
 				printf("-> %d",k);//打印路径顶点
-				k=p[k][w]; //获得下一个路径顶点下标
+				k=(*P)[k][w]; //获得下一个路径顶点下标
 			}
 			printf("-> %d\n",w);//打印终点
 		}
