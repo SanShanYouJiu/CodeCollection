@@ -41,7 +41,7 @@ void CreateALGraph(GraphAdjList *G) {
 	printf("输入顶点数和边数:\n");
 	scanf("%d,%d",&G->numVertexes,&G->numEdges);/*输入顶点数和边数*/
 	for(i=0; i<G->numVertexes; i++) {
-		scanf(&G->adjlist[i].data);/*输入顶点信息*/
+		scanf("%d",&G->adjlist[i].data);/*输入顶点信息*/
 		G->adjlist[i].firstedge=NULL;/*将边表置为空表*/
 	}
 	for(k=0; k<G->numEdges; k++) { /*建立边表*/
@@ -60,8 +60,10 @@ void CreateALGraph(GraphAdjList *G) {
 	}
 }
 
-
-//拓扑排序 若GL无回路 则输出拓扑排序序列并返回OK，若有回路返回ERROR
+int *etv,*ltv; //事件最早发生事件和最迟发生时间数组
+int *stack2; // 用于存储拓扑序列的栈
+int top2; //用于stack2的指针
+//拓扑排序  用于关键路径计算
 Status TopologicalSort(GraphAdjList *GL) {
 	EdgeNode *e;
 	int i,k,gettop;
@@ -72,15 +74,23 @@ Status TopologicalSort(GraphAdjList *GL) {
 	for(i=0; i<GL->numVertexes; i++)
 		if(GL->adjlist[i].in ==0) //将入度为0的顶点入栈
 			stack[++top]=i;
+	top2=0;	 //初始化为0
+	etv=(int *)malloc(GL->numVertexes*sizeof(int)); //事件最早发生时间
+	for(i=0; i<GL->numVertexes; i++)
+		etv[i]=0; //初始化为0
+	stack2=(int *)malloc(GL->numVertexes*sizeof(int));//初始化
 	while(top!=0) {
 		gettop=stack[top--]; //出栈
 		printf("%d ->",GL->adjlist[gettop].data);//打印此节点
 		count++;//统计输出顶点数
+		stack2[++top2]=gettop;//将弹出的顶点序号压入拓扑序列的栈
 		for(e=GL->adjlist[gettop].firstedge; e; e=e->next) {
 			//对此顶点弧度表遍历
 			k=e->adjvex;
 			if(!(--GL->adjlist[k].in)) //将k号顶点领接点的入度减一
 				stack[++top]=k; //若为0则入栈 以便下次循环输出
+			if((etv[gettop]+e->weight)>etv[k])//求各顶点事件最早发生时间值
+				etv[k]=etv[gettop]+e->weight;
 		}
 	}
 
@@ -88,5 +98,36 @@ Status TopologicalSort(GraphAdjList *GL) {
 		return ERROR;
 	else
 		return OK;
+
+}
+
+//求关键路径 GL为有向网 输出GL的各项关键活动
+void CriticalPath(GraphAdjList *GL) {
+	EdgeNode *e;
+	int i,gettop,k,j;
+	int ete,lte; //声明活动最早发生时间和最迟发生时间变量
+	TopologicalSort(GL);//求拓扑序列 计算数组etv和stack2的值
+	ltv=(int *)malloc(GL->numVertexes*sizeof(int));//事件最晚发生时间
+	for(i=0; i<GL->numVertexes; i++)
+		ltv[i]=etv[GL->numVertexes-1]; //初始化ltv
+	while(top2!=0) { //计算ltv
+		gettop=stack2[top2--];//将拓扑序列出栈 后进后出
+		for(e=GL->adjlist[gettop].firstedge; e; e=e->next) {
+			//求各顶点事件的最迟发生时间ltv值
+			k=e->adjvex;
+			if(ltv[k]-e->weight<ltv[gettop]) //求各顶点事件最晚发生时间ltv
+				ltv[gettop]=ltv[k]-e->weight;
+		}
+	}
+	for(j=0; j<GL->numVertexes; j++) { //求ete，lte和关键活动
+		for(e=GL->adjlist[j].firstedge; e; e=e->next) {
+			k=e->adjvex;
+			ete=etv[j];//活动最早发生时间
+			lte=ltv[k]-e->weight;//活动最迟发生时间
+			if(ete==lte)     //倆者相等即在关键路径上
+				printf("<v%d,v%d> length:%d, ",
+				       GL->adjlist[j].data,GL->adjlist[k].data,e->weight);
+		}
+	}
 
 }

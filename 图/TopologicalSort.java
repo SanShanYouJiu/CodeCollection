@@ -52,7 +52,7 @@ public class TopologicalSort {
         for (i = 0; i < G.numVertexes; i++) {
             G.adjList[i] = new AdjList();
             System.out.println("输入"+i+"节点数据");
-            G.adjList[i].data = new Scanner(System.in).next();//在C语言版中 是采用的scanf函数进行输入顶点信息
+            G.adjList[i].data = new Scanner(System.in).next(); 
             G.adjList[i].firstedge = null;
         }
 
