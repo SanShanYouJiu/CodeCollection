@@ -9,7 +9,7 @@
 
 重入锁简单的使用案例入戏
 
-相关代码请见 ReenterLock
+相关代码请见 [ReenterLock][1]
 
 
 
@@ -37,7 +37,7 @@
   
   下面的代码产生了一个死锁 但得益与锁中断 我们可以很轻易的解决这个死锁
   
-  相关代码请见 IntLock
+  相关代码请见 [IntLock][2]
   
   在这个代码中 统一使用lockInterruptibly()方法
   这是一个可以对中断进行响应的锁申请操作 即在等待锁的过程中 可以响应中断 
@@ -46,18 +46,18 @@
  
  除了等待外部通知 要避免死锁还有另外一种方法 那就是限时等待   给定一个等待时间 让线程自动放弃  这对系统来说是有意义的   我们可以使用tryLock方法进行一次限时的等待
  
- 相关代码请见 TimeLock
+ 相关代码请见 [TimeLock][3]
  
  ReentrantLock.tryLock()方法也可以不带参数直接运行 在这种情况下 当前线程会尝试获得锁 如果锁并未被其他线程占用  则申请锁会成功  并立即返回true  如果锁被其他线程占用 则当前线程不会进行等待 而是立即返回false    
  这种模式不会引起线程等待 因此也不会产生死锁     
  
- 相关代码请见TryLock
+ 相关代码请见[TryLock][4]
   
   
 #### 公平锁
    公平锁不会产生饥饿 只要你排队 最终还是可以得到资源的 如果我们使用synchronized关键字来实现锁控制  那么产生的锁就是非公平的 而重入锁允许我们队其公平性进行设置
    
-  相关代码请见 FairLock
+  相关代码请见 [FairLock][5]
    
   公平锁看起来的确非常的优美 但是实现公平锁必然要求系统维护一个有序队列 因此公平锁的实现成本比较高 性能也相对非常低下 因此 默认情况下 锁是非公平的 如果没有特别的需求 也不需要使用公平锁 公平锁和非公平锁在线程调度上也是非常不一样的 
    
@@ -75,7 +75,7 @@
    
    例子如下
 
-   相关代码请见 ReenterLockCondition
+   相关代码请见 [ReenterLockCondition][6]
    
    与Object的wait()和notify()方法一样 
    在signal()方法被调用后 一般需要释放相关的锁 谦让给被唤醒的线程 让他可以继续执行 比如本例的31-33行 就释放了重入锁 如果省略了第33行 那么 虽然已经唤醒了线程t1 但是由于它无法重新获得锁 因而也就无法真正的继续执行
@@ -99,7 +99,7 @@
    acquire()方法尝试获得一个准入的许可 若无法获得 则线程会等待 直到有线程释放一个许可 或者当前线程被中断 。acquireUninterruptibly()方法和acquire()方法类似  但是不响应中断 tryAcquire()会尝试获得一个许可 如果成功返回true 失败则是false  它不会进行等待 立即返回
    release()用于线程访问资源结束后 释放一个许可 以使其他等待许可的线程可以选择资源返回
    
- 相关代码请见 SemaphoreDemo
+ 相关代码请见 [SemaphoreDemo][7]
  
 ### 3.1.4 ReadWriteLock 读写锁
 
@@ -117,7 +117,7 @@ ReadWriteLock是JDK5提供的读写分离锁 读写分离锁可以有效的帮�
 - 读-写互斥:读阻塞写，写也会阻塞读
 - 写-写互斥：写写阻塞
 
-相关代码请见 ReadWriteLockDemo
+相关代码请见 [ReadWriteLockDemo][8]
 
 ### 3.1.5 倒计时器：CountDownLatch
 
@@ -127,7 +127,7 @@ ReadWriteLock是JDK5提供的读写分离锁 读写分离锁可以有效的帮�
     
         public CountDownLatch(int count)
 
-相关代码请见 CountDownLatchDemo
+相关代码请见 [CountDownLatchDemo][9]
   
 ### 3.1.6 循环栅栏  :CyclicBarrier
 
@@ -138,7 +138,7 @@ CyclicBarrier可以理解为循环栅栏  栅栏是一种障碍物 前面的Cycl
 
     public CyclicBarrier(int parties,Runnable barrierAction)
     
- 相关代码请见CyclicBarrierDemo
+ 相关代码请见 [CyclicBarrierDemo][10]
     
 这里会抛出俩个异常 一个是InterruptedException 也就是等待中断 线程被中断 这是一个非常通用的异常 第二个异常则是CyclicBarrier的BrokenBarrierException 一旦遇到这个异常  则表示当前的CyclicBarrier已经破损了 可能系统已经没有办法等待所有线程到期了 如果继续等待 可能就是徒劳无功  
 这个异常就可以避免其他9个线程进行永久的 无谓的等待 
@@ -148,7 +148,7 @@ CyclicBarrier可以理解为循环栅栏  栅栏是一种障碍物 前面的Cycl
 LockSupport是一个非常方便实用的线程阻塞工具，它可以在线程内任意位置上线程让出线程阻塞，和Thread.suspend()相比 它弥补了由于resume()在前发生 导致线程无法继续执行的情况 和Object.wait()相比 它不需要先伙食某发对象的锁 也不会抛出InterruptedException异常
 用LockSupport重写第二章提到的suspend()永久卡死线程的例子
 
-相关代码请见LockSupportDemo
+相关代码请见 [LockSupportDemo][11]
 
 在简单的将原来的suspend()和resume()方法用park()和unpark()方法做了替换 当然也无法保证unpark()方法会发生在park()方法之前 但是  它自始至终都可以正常的结束 不会因为park()方法而导致线程永久性的挂起
 这是因为LockSupport类使用类似信号量的机制。它为每一个线程准备了一个许可，如果许可可用 那么park()方法会立即返回 并且消费这个许可(也就是将许可变为不可用) 如果许可不可用 就会阻塞  而unpark()则会使得一个许可变为可用(但是和信号量不同的是，许可不能累加，你不能拥有超过一个许可 它拥有只有一个)
@@ -166,7 +166,7 @@ LockSupport是一个非常方便实用的线程阻塞工具，它可以在线程
  除了有定时阻塞的功能外 LockSupport.park()还能支持中断影响 但是和其他接受中断的函数很不一样,LockSupport.park()不会抛出InterruptedException异常 它只是会默默的返回 但是我们可以从Thread.interrupted()等方法获得中断标记
   
  
- 相关代码请见LockSupportIntDemo
+ 相关代码请见 [LockSupportIntDemo][12]
  
  
 ## 3.2 线程复用：线程池
@@ -187,7 +187,7 @@ LockSupport是一个非常方便实用的线程阻塞工具，它可以在线程
 
 为了更好的控制多线程 JDK提供了一套Executor框架  帮助开发人员有效地进行线程控制 其本质就是一个多线程
 
- ![此处输入图片的描述][1]
+ ![此处输入图片的描述][13]
 以上成员均在java.util.concurrent包中 是JDK并发包的核心类 其中ThreadPoolExecutor类表示一个线程池 Executors类则扮演着线程池工厂的角色 通过Executors可以取得一个拥有特定功能的线程池 从UML图中可知 ThreadPoolExecutor类实现了Executor接口  因此通过这个接口 任何Runnable的对象都可以被ThreadPoolExecutor线程池调度 
 
 - Executor 执行器接口，该接口定义执行Runnable任务的方式。
@@ -221,7 +221,7 @@ Executor框架提供了各种类型的线程池 主要有以下工厂方法:
 
 **固定大小的线程池**
 
-相关代码请见ThreadPoolDemo
+相关代码请见 [ThreadPoolDemo][14]
 
 **计划任务**
 另外一个值得注意的是newScheduledThreadPool()方法 它返回一个ScheduleExecutorService对象  可以根据时间需要对现场进行调度 它的一些主要方法如下
@@ -246,7 +246,7 @@ Executor框架提供了各种类型的线程池 主要有以下工厂方法:
  FixRate是隔多长时间周期执行是包括内部代码的运行时间 而FixDelay则是不包括内部代码的运行时间 而是隔多长时间运行一次 
  具体的话看官方文档吧 以及下面的例子
 
-相关代码请见ScheduledExecutorServiceDemo
+相关代码请见 [ScheduledExecutorServiceDemo][15]
 
 这里有一个有意思的地方  如果任务的执行时间超过调度时间 会发生什么情况呢？比如 这里调度是每隔2秒 如果任务执行8秒 会出现什么情况呢 这种周期太短的情况 那么任务就会在上一个任务结束后 立即被调用 可以想象 如果用FixDelay就会变成10秒了
 
@@ -296,7 +296,7 @@ Executor框架提供了各种类型的线程池 主要有以下工厂方法:
         
   下面的代码简单的演示了自定义线程池和拒绝策略的使用
   
-  相关代码请见RejectThreadPoolDemo
+  相关代码请见 [RejectThreadPoolDemo][16]
   
 ### 3.2.5 自定义线程创建：ThreadFactory
  
@@ -307,7 +307,7 @@ Executor框架提供了各种类型的线程池 主要有以下工厂方法:
   当线程池需要新建线程时 就会调用这个方法
   自定义线程池可以帮助我们做不少事，比如 等我们可以追踪线程池究竟在何时创建了多少线程，也可以自定义线程的名称，组以及优先级等信息，设置可以任性地将所有线程设置为守护线程。总之，使用自定义线程池可以让我们更加自由地设置池中所有线程的状态
   
-  相关代码请见ThreadFactoryDemo
+  相关代码请见 [ThreadFactoryDemo][17]
    
 ### 3.2.6 我的应用我做主：扩展线程池
  
@@ -316,7 +316,7 @@ Executor框架提供了各种类型的线程池 主要有以下工厂方法:
   在默认的ThreadPoolExecutor实现中，提供了空的beforeExecute()和afterExecute()实现，在实际应用中。可以对其扩展来实现对线程池运行状态的跟踪 输出一些有用的调试信息， 以帮助系统故障诊断，这对多线程程序输出错误排查是很有帮助的
   下面有个例子
   
-  相关代码请见ExTreadPool
+  相关代码请见 [ExTreadPool][18]
   
 ### 3.2.7 合理的选择：优化线程池线程数量
 
@@ -375,8 +375,8 @@ $$W/C=等待时间与计算时间的比率$$
 注意 是部分 这是因为从这俩个异常堆栈中我们只能知道异常是在哪里抛出的 但是我们还希望得到另外一个更重要的信息 那就是这个任务到底是在哪里提交的？而任务的具体提交位置已经被线程池完全淹没了
  解决方法就是我们扩展自己的ThreadPoolExecutor线程池 在它调度任务之前 先保存一下提交任务线程的堆栈信息
 
-相关代码请见TraceThreadPoolExecutor
-相关代码请见DivTask
+相关代码请见 [TraceThreadPoolExecutor][19]
+相关代码请见 [DivTask][20]
         
 ### 3.2.9 分而治之：Fork/Join框架
 “分而治之”这是一个非常有效的处理大量的数据的方法 也是一个归并排序的实现思想 注明的MapReduce也是采取了分而治之的思想
@@ -395,7 +395,7 @@ ForkJoinPool的一个重要接口
      
 你可以向ForkJoinPool线程池提交一个ForkJoinTask任务 所谓ForkJoinTask任务就是支持fork()分析以及join()等待的任务 ForkJoinTask有俩个重要的子类，RecursiveAction和RecursiveTask。它们分别表示没有返回值的任务和可以携带返回值的任务
 
-相关代码请见CountTask
+相关代码请见 [CountTask][21]
 
 此外,ForkJoin线程池使用了一个无锁的栈来管理空闲线程 如果一个工作线程暂时取不到可用的任务 则可能会挂起 挂起的线程将会被压入线程池维护的栈中 待将来有任务可用时 再从栈中唤醒这些线程
 
@@ -657,7 +657,7 @@ BlockingQueue会让服务线程在队列为空时 进行等待 当有新的消�
 
 跳表的另外一个特点是随机算法 跳表的本质是同时维护了多个链表 并且链表是分层的  如下图所示 
 
-![此处输入图片的描述][2]
+![此处输入图片的描述][22]
 
 跳表所有的元素都是排序的 查找时也是如图所示 从顶级链表开始找 一旦发现被查找的元素大于当前链表中的取值 就会转入下一层链表继续找 这也就是说 查找的过程是跳跃式的
 
@@ -673,7 +673,28 @@ Node则就是key value 还有一个next指向下一个Node Index就是索引 内
                                  
 
 
-  [1]: http://images2015.cnblogs.com/blog/453361/201601/453361-20160125021323270-912734702.png
-  [2]: http://www.spongeliu.com/wp-content/uploads/2010/09/2.png
-  
  
+
+
+  [1]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ReenterLock.java
+  [2]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/IntLock.java
+  [3]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/TimeLock.java
+  [4]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/TryLock.java
+  [5]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/FairLock.java
+  [6]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ReenterLockCondition.java
+  [7]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/SemaphoreDemo.java
+  [8]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ReadWriteLockDemo.java
+  [9]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/CountDownLatchDemo.java
+  [10]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/CyclicBarrierDemo.java
+  [11]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/LockSupportDemo.java
+  [12]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/LockSupportIntDemo.java
+  [13]: http://images2015.cnblogs.com/blog/453361/201601/453361-20160125021323270-912734702.png
+  [14]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ThreadPoolDemo.java
+  [15]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ScheduledExecutorServiceDemo.java
+  [16]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/RejectThreadPoolDemo.java
+  [17]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ThreadFactoryDemo.java
+  [18]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/ExThreadPool.java
+  [19]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/TraceThreadPoolExecutor.java
+  [20]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/DivTask.java
+  [21]: https://github.com/SanShanYouJiu/CodeCollection/blob/master/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/javaHighConcurrentDesign/chapter3/CountTask.java
+  [22]: http://www.spongeliu.com/wp-content/uploads/2010/09/2.png
