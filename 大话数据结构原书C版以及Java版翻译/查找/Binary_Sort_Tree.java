@@ -7,7 +7,7 @@
 public class Binary_Sort_Tree {
 
     private BiTree T = null;
-
+-
     private BiTree p = null;
 
     boolean SearchBST(BiTree T, int key, BiTree f) {
