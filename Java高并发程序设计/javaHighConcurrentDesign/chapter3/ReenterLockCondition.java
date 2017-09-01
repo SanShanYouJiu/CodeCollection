@@ -4,7 +4,6 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Created by han on 2017/7/19.
  */
 public class ReenterLockCondition implements Runnable {
     public static ReentrantLock lock = new ReentrantLock();

@@ -6,6 +6,7 @@ NEW RUNNABLE BLOCKED,WAITING,TIMED_WAITING,TERMINATED
 ## 2.2 线程基本操作
  
 ### 2.2.1  新建线程
+
 >一些简单的基本的耗字的就不写了 
 
 这里主要是Thread与Runnable区别 以及Start开始线程方法 推荐使用Runnable接口进行编写并发代码 这也是最常见的方式
