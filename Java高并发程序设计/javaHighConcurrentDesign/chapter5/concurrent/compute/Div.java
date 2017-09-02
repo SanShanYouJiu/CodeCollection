@@ -4,7 +4,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
- * Created by www85 on 2017/8/20.
  */
 public class Div implements Runnable {
 

@@ -3,7 +3,6 @@ package javaHighConcurrentDesign.chapter5.future2;
 import java.util.concurrent.Callable;
 
 /**
- * Created by www85 on 2017/8/19.
  */
 public class RealData implements Callable<String> {
 

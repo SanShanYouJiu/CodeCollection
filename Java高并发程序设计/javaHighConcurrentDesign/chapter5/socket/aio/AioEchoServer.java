@@ -1,6 +1,7 @@
 package javaHighConcurrentDesign.chapter5.socket.aio;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -17,11 +18,12 @@ public class AioEchoServer {
     private AsynchronousServerSocketChannel server;
 
     public AioEchoServer() throws IOException {
-        server = AsynchronousServerSocketChannel.open();
+        server = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(PORT));
     }
 
      public void start() throws InterruptedException ,ExecutionException,TimeoutException{
-         System.out.println("Server listen on"+PORT);
+         System.out.println("Server listen on "+PORT);
+         //注册事件和事件完成后的处理器
          server.accept(null, new CompletionHandler<AsynchronousSocketChannel, Object>() {
              final ByteBuffer buffer = ByteBuffer.allocate(1024);
              @Override

@@ -1,7 +1,5 @@
 package javaHighConcurrentDesign.chapter5.socket.aio;
 
-import com.sun.org.apache.xpath.internal.operations.String;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -12,8 +10,12 @@ import java.nio.channels.CompletionHandler;
  */
 public class AioEchoClient {
 
-    public static void main(String[] args) throws IOException {
-        final AsynchronousSocketChannel client = AsynchronousSocketChannel.open();
+    //public static void main(String[] args)   {
+
+    //}
+
+    public static void main(String[] args)  throws IOException{
+            final AsynchronousSocketChannel client = AsynchronousSocketChannel.open();
         client.connect(new InetSocketAddress("localhost", 8000), null, new CompletionHandler<Void, Object>() {
 
             @Override
@@ -55,5 +57,6 @@ public class AioEchoClient {
 
             }
         });
+
     }
 }
