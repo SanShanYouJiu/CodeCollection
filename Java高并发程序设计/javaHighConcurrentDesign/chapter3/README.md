@@ -145,7 +145,7 @@ CyclicBarrier可以理解为循环栅栏  栅栏是一种障碍物 前面的Cycl
 
 ### 3.1.7 线程阻塞工具类:LockSupport
     
-LockSupport是一个非常方便实用的线程阻塞工具，它可以在线程内任意位置上线程让出线程阻塞，和Thread.suspend()相比 它弥补了由于resume()在前发生 导致线程无法继续执行的情况 和Object.wait()相比 它不需要先伙食某发对象的锁 也不会抛出InterruptedException异常
+LockSupport是一个非常方便实用的线程阻塞工具，它可以在线程内任意位置上线程让出线程阻塞，和Thread.suspend()相比 它弥补了由于resume()在前发生 导致线程无法继续执行的情况 和Object.wait()相比 它不需要先获得某个对象的锁 也不会抛出InterruptedException异常
 用LockSupport重写第二章提到的suspend()永久卡死线程的例子
 
 相关代码请见 [LockSupportDemo][11]

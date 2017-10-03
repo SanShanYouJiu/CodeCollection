@@ -14,7 +14,7 @@ public class Client {
         //赋值
         HashMap<String, Integer> var = getValue(expstr);
         Calculator cal = new Calculator(expstr);
-        System.out.println("运算结果为："+expstr+"expStr"+cal.run(var));
+        System.out.println("运算结果为："+expstr+"="+cal.run(var));
     }
 
     //获得表达式

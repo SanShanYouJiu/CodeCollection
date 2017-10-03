@@ -32,15 +32,15 @@ public class Originator {
         private String state = "";
         //构造函数传递参数
 
-        public Memento(String state) {
+        private Memento(String state) {
             this.state = state;
         }
 
-        public String getState() {
+        private String getState() {
             return state;
         }
 
-        public void setState(String state) {
+        private void setState(String state) {
             this.state = state;
         }
     }
