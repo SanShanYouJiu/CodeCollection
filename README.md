@@ -110,7 +110,7 @@
   [20]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Memo
   [21]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Iterator
   [22]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/TemplateModel
-  [23]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Decoratecom/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/ResponsibilityChain
+  [23]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Decorate
   [24]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Adapter
   [25]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Composite
   [26]: https://github.com/SanShanYouJiu/CodeCollection/tree/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/DesignModel/Facade
