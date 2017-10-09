@@ -30,7 +30,7 @@ public class RestartActor extends UntypedActor {
 
     @Override
     public void preRestart(Throwable reason, Option<Object> message) throws Exception {
-        System.out.println("preStart hashcode:" + this.hashCode());
+        System.out.println("preReStart hashcode:" + this.hashCode());
     }
 
 

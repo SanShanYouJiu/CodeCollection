@@ -34,7 +34,7 @@ public class WatchActor extends UntypedActor {
             router.route(msg, getSender());
         } else if (msg instanceof Terminated) {
             router = router.removeRoutee(((Terminated) msg).actor());
-            System.out.println(((Terminated) msg).actor().path() + "is cosed ,routees =" + router.routees().size());
+            System.out.println(((Terminated) msg).actor().path() + "is closed ,routees =" + router.routees().size());
             if (router.routees().size() == 0) {
                 System.out.println("Close system");
                 RouteMain.flag.send(false);
